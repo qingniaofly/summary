@@ -1,0 +1,11 @@
+
+1、使用伪类
+.clear::after{
+  content: "";
+  clear:both;
+}
+
+
+
+
+2、使用<div style="display:both;"></div>

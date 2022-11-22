@@ -1,0 +1,182 @@
+
+一、git clone 时候出现Please make sure you have the correct access rights and the repository exists.问题解决
+
+
+1、删除 .ssh 文件夹【C:\Users\(本地用户名)\.ssh】 中的 known_hosts(直接删除即可)
+
+2、找到git安装目录，进入bin目录，运行bash.exe，执行ssh-keygen -t rsa -C "username"（你的git用户名）
+
+    如果执行成功：
+       返回
+       Generating public/private rsa key pair.
+       Enter file in which to save the key (/Users/username/.ssh/id_rsa):
+    直接回车
+
+    如果以前没有储存地址就会出现Enter passphrase(empty for no passphrase);也直接回车，
+
+    两种情况回车后都会出现 Enter same passphrase again 然后接着回车会显示
+
+3、找到步骤1的.ssh文件夹，会看到生成了id_rsa和id_rsa.pub
+
+4、拷贝id_rsa.pub中的内容，打开github或gitlab，添加到ssh的key
+
+5、在bash.exe中输入ssh -T git@你的项目地址，后面的内容直接yes
+
+6、最后提示：Welcome to GitLab, xxx!
+
+https://blog.csdn.net/qq_36181310/article/details/88760623
+
+
+二、如何基于某个分支创建新分支
+
+1、执行git branch，查看分支
+
+2、执行git checkout -b person-pay-vip origin/development，会基于development创建新分支person-pay-vip
+
+3、执行git push origin person-pay-vip，推送到git
+
+
+三、merge 分支B to A
+直接merge
+
+
+四、删除分支
+
+1、删除本地分支: git branch -D dev-yctao
+
+2、删除已经合并的分支: git branch -d dev-yctao
+
+3、删除remotes/origin下的已经删除的分支: git remote prune origin
+
+
+五、新加submodule
+
+1、git submodule add [git url]
+
+2、如果需要名称，依次执行
+	git mv old-name new-name
+
+	git submodule sync
+
+	git add -u
+
+3、commit
+
+
+六、git文件名大小写无法修改
+
+方法1、设置 git config core.ignorecase false
+
+方法2、修改成其他文件名，再改回来
+
+方法3、把文件备份，再把文件删除，再新增
+
+
+七、No url found for submodule path 'xxxx' in .gitmodules
+
+原因可能是本地存在缓存，清理一下缓存
+执行： git rm --cached xxxx
+
+
+
+八、 TortoiseGit 添加ssh key，绑定git
+
+https://jingyan.baidu.com/article/4d58d54165b8f79dd5e9c046.html
+https://www.cnblogs.com/beeasy/p/6066466.html、
+
+
+
+九、git回退到某个版本并提交
+
+git checkout dev
+git reflog  寻找到指定版本
+
+
+回退到分支某个版本  git reset --hard  c88173be7b521fcbe88c5be4fc1d3889e52226ae（要回退的分支版本号）
+
+查看分支当前版本  git rev-parse HEAD 
+
+提交回退的版本 git push -f  (注：强制提交后，当前版本后面的提交版本将会删掉！)
+
+
+
+
+十、代码合并
+git merge --no-ff develop -m "合并代码"
+
+回滚到合并之前
+
+git merge --abort
+
+
+十一、合并本地head版本
+git relog 查询到指定版本号
+git branch temp xxxx  基于版本号创建分支
+git merge temp 将temp合并到当前分支
+
+
+
+
+十二、如何删除某个本地的提交
+
+（1）、rm后要commit一下才会生效，但这样只是让文件不再出现在今后的版本中，文件副本仍然会在.git/下（这样git才能让误删的文件恢复）。 
+
+要彻底消灭文件副本，那就要让文件彻底从历史中消失，分两种情况：
+
+ 
+
+1、如果你的文件添加记录是最近1次，而且没有别的更改，可以简单使用reset --hard commit_id来彻底回溯，然后gc一下再上传就没问题了。
+
+2、如果是在你N次提交以内的某次，而且同时还有别的重要提交，那最好用rebase合并一下这几次提交记录（包括rm的commit），然后再gc提交
+
+ 
+
+（2）、撤销commit的一些方法
+
+1、git reset –mixed：此为默认方式，不带任何参数的git reset，即时这种方式，它回退到某个版本，只保留源码，回退commit和index信息
+
+2、git reset –soft：回退到某个版本，只回退了commit的信息，不会恢复到index file一级。如果还要提交，直接commit即可
+
+3、git reset –hard：彻底回退到某个版本，本地的源码也会变为上一个版本的内容
+
+ 
+
+（3）、其他一些方法
+
+1、git revert 是撤销某次操作，此次操作之前的commit都会被保留
+ 
+2、git reset 是撤销某次提交，但是此次之后的修改都会被退回到暂存区
+ 
+3、git reset --hard HEAD~1         删除最后提交的1条记录
+
+4、git revert HEAD
+
+
+
+十三、查看分支的创建者
+git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n|grep branch_A
+
+
+十四、配置多git账号
+Host bjgitlab.quanshi.com
+	User yangchao.tao@quanshi.com
+	HostName bjgitlab.quanshi.com
+	IdentityFile ~/.ssh/id_rsa_bjgitlab
+
+
+# https://github.com/
+Host github.com
+	User yangchao.tao@quanshi.com
+	HostName github.com
+	PreferredAuthentications publickey
+	IdentityFile ~/.ssh/id_rsa_github
+# Port 443
+
+
+
+十五、退出git冲突页面
+
+1、鼠标按：i
+2、鼠标按下： esc
+3、鼠标按下：shift + :
+4、鼠标按下：Q或者WQ（WQ表示暂存）

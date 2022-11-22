@@ -1,0 +1,43 @@
+1、利用伪类绘制带阴影的小三角，::before绘制三角形，::after叠加阴影
+.popover-weixin-c::before{
+        display:block;
+        content:'';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-top: 10px solid #fff;
+        border-bottom: 10px solid transparent;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        bottom:-20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+    }
+
+    .popover-weixin-c::after{
+        display:block;
+        content:'';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-top: 12px solid rgba(0,0,0,0.1);
+        border-bottom: 12px solid transparent;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        bottom:-24px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+&::before {
+					position: absolute;
+					top: -18px;
+					left: 40px;
+					content: "";
+					width: 0;
+					height: 0;
+					border-bottom: 40px solid #f5f5f5;
+					border-right: 30px solid transparent;
+					border-left: 30px solid transparent;
+				}

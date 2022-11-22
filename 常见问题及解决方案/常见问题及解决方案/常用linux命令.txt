@@ -1,0 +1,43 @@
+1、将文件压缩成tar
+ cmder进入文件目录，执行tar -czvf eamsweb.tar.gz eamsweb        【eamsweb:文件名】
+
+ 解压：tar -xzvf eamsweb.tar.gz
+
+
+
+2、拷贝命令
+sudo cp file1  file2
+
+copy 一个目录下的所有文件以及递归文件 到当前文件夹
+ cp -r dist/* ./
+
+
+
+3、压缩当前目录的所有文件
+tar -czvf setting.tar.gz assets css images script style favicon.ico index.html
+
+
+
+
+4、拷贝命令
+sudo cp file1  file2
+
+
+
+
+5、删除命令
+sudo rm -rf file
+
+
+
+6、查看文件
+sudo cat file
+
+
+7、列当前目录清单
+ls
+
+
+
+8、切换到root权限
+sudo -i

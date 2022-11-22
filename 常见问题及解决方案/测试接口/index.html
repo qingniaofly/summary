@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试接口</title>
+	<script type="text/javascript" src="./js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+<button onclick="start()">开始测试</button>
+<script>
+class ObjectDefineProperty {
+    pathMap = new Map()
+    object = {}
+
+    constructor(object, rule) {
+        this.object = object
+        const rules = {
+            'customUI.videoBtn.isShow': () => {
+                return false
+            },
+        }
+        Object.keys(rules).forEach((key) => {
+            this.pathMap.set(key, rules[key])
+        })
+        this.observe(this.object)
+    }
+
+    observe(data, parentPath) {
+        if (!data || typeof data !== 'object') {
+            return
+        }
+        // 取出所有属性遍历
+        Object.keys(data).forEach((key) => {
+            this.defineProp(data, key, data[key], parentPath)
+        })
+    }
+
+    defineProp(data, key, childVal, parentPath) {
+        const path = `${parentPath ? `${parentPath}.` : ''}${key}`
+        const self = this
+        self.observe(childVal, path) // 监听子属性
+        Object.defineProperty(data, key, {
+            set: (newVal) => {
+                // eslint-disable-next-line no-param-reassign
+                const func = self.pathMap.get(path)
+                if (typeof func === 'function' && !func()) {
+                    return
+                }
+                childVal = newVal
+            },
+            get: () => {
+                return childVal
+            },
+            enumerable: true, // 可枚举
+            configurable: false, // 不能再define
+        })
+    }
+}
+    function start() {
+
+        var options = {
+
+        }
+        ajax(options, function (data) {
+            debugger
+        })
+    }
+
+    function ajax(options,callback) {
+        $.ajax({
+            url: options.url,
+            type: options.type,
+            dataType: options.dataType,
+            data: options.data,
+            success:function (ret) {
+                callback(ret)
+            },
+            error: function (a,b,c) {
+                callback(a,b,c)
+            }
+        })
+    }
+	
+	function observe1(data, parentPath = '') {
+    if (!data || typeof data !== 'object') {
+        return
+    }
+    // 取出所有属性遍历
+    Object.keys(data).forEach((key) => {
+        defineProp(data, key, data[key], parentPath)
+    })
+}
+
+function defineProp1(data, key, childVal, parentPath) {
+    const path = `${parentPath ? `${parentPath}.` : ''}${key}`
+	console.log('path=', path)
+    observe(childVal, path) // 监听子属性
+    Object.defineProperty(data, key, {
+        set: (newVal) => {
+            // eslint-disable-next-line no-param-reassign
+            childVal = newVal
+        },
+        get: () => {
+            return childVal
+        },
+        enumerable: true, // 可枚举
+        configurable: false, // 不能再define
+    })
+}
+
+	
+	const config = {
+        appName: '',
+        language: null,
+        colorTheme: null,
+        customUI: {
+            audioVideo: {},
+            attendee: {},
+            videoBtn: {
+                isShow: true,
+            },
+        },
+    }
+	new ObjectDefineProperty(config)
+	//observe1(config)
+	const config2 = {
+        appName: '',
+        language: null,
+        colorTheme: null,
+        customUI: {
+            audioVideo: {},
+            attendee: {},
+            videoBtn: {
+                isShow: true,
+            },
+        },
+    }
+	const config3 = new Proxy(config2, {
+    get(obj, prop) {
+        return obj[prop];
+    },
+    set(obj, prop, val) {
+        obj[prop] = val;
+    }
+})
+	const videoBtn = config1.customUI.videoBtn
+	 Object.defineProperty(videoBtn, 'isShow', {
+            set: function(newValue) {
+				videoBtn.isShow = 10
+				console.log('change')
+				//debugger
+               //return 10 
+            },
+			get: function() {
+			//console.log(this)
+			//debugger
+               return config2.customUI.videoBtn.isShow 
+            },
+			enumerable: true, // 可枚举
+			configurable: false, // 不能再define
+        })
+</script>
+</body>
+</html>

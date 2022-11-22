@@ -1,0 +1,4 @@
+    width: 2.5rem;
+    height: 5rem;
+    background-color: #fff336;
+    border-radius: 2.5rem 0 0 2.5rem;

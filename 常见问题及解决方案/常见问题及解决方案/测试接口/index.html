@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试接口</title>
+</head>
+<body>
+<button onclick="start()">开始测试</button>
+<script>
+
+    function start() {
+
+        var options = {
+
+        }
+        ajax(options, function (data) {
+            debugger
+        })
+    }
+
+    function ajax(options,callback) {
+        $.ajax({
+            url: options.url,
+            type: options.type,
+            dataType: options.dataType,
+            data: options.data,
+            success:function (ret) {
+                callback(ret)
+            },
+            error: function (a,b,c) {
+                callback(a,b,c)
+            }
+        })
+    }
+</script>
+</body>
+</html>

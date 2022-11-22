@@ -1,0 +1,8 @@
+一、修改node版本
+1、安装nvm
+
+2、执行nvm ls 查看当前的所有node版本
+
+3、执行nvm install xx.xx，安装指定版本
+
+4、执行nvm use xx.xx，使用指定版本

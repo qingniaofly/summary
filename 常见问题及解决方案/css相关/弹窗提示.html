@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>弹窗提示</title>
+    <style>
+        *, *::before, *::after {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        .modal-wrap {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
+            overflow: auto;
+            outline: 0;
+            -webkit-overflow-scrolling: touch;
+            background-color: rgba(0,0,0,.45);
+        }
+        .modal{
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            color: rgba(0,0,0,.65);
+            font-size: 14px;
+            font-variant: tabular-nums;
+            line-height: 1.5715;
+            list-style: none;
+            -webkit-font-feature-settings: 'tnum';
+            font-feature-settings: 'tnum';
+            position: relative;
+            top: 100px;
+            margin: 0 auto;
+            padding-bottom: 24px;
+            pointer-events: none;
+            width: 416px;
+            transform-origin: 533.5px 558px;
+        }
+
+        .modal-content{
+            position: relative;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 0;
+            border-radius: 2px;
+            -webkit-box-shadow: 0 3px 6px -4px rgba(0,0,0,.12), 0 6px 16px 0 rgba(0,0,0,.08), 0 9px 28px 8px rgba(0,0,0,.05);
+            box-shadow: 0 3px 6px -4px rgba(0,0,0,.12), 0 6px 16px 0 rgba(0,0,0,.08), 0 9px 28px 8px rgba(0,0,0,.05);
+            pointer-events: auto;
+        }
+
+        .modal-body{
+            font-size: 14px;
+            line-height: 1.5715;
+            padding: 32px 32px 24px;
+        }
+
+        .body-wrapper::before{
+            display: table;
+            content: '';
+        }
+
+        .body-wrapper::after{
+            display: table;
+            clear: both;
+            content: '';
+        }
+
+        .message{
+            margin-top: 8px;
+            color: rgba(0,0,0,.65);
+            font-size: 14px;
+        }
+
+        .icon{
+            display: inline-block;
+            font-style: normal;
+            line-height: 0;
+            text-align: center;
+            text-transform: none;
+            vertical-align: -0.125em;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+            top: 1px;
+            color: #52c41a;
+            float: left;
+            margin-right: 16px;
+            font-size: 22px;
+        }
+
+        .hide{
+            display: none;
+        }
+
+        .t-btns{
+            float: right;
+            margin-top: 24px;
+        }
+
+        .btn{
+            line-height: 1.5715;
+            position: relative;
+            display: inline-block;
+            font-weight: 400;
+            white-space: nowrap;
+            text-align: center;
+            background-image: none;
+            border: 1px solid transparent;
+            -webkit-box-shadow: 0 2px 0 rgba(0,0,0,.015);
+            box-shadow: 0 2px 0 rgba(0,0,0,.015);
+            cursor: pointer;
+            -webkit-transition: all .3s cubic-bezier(.645,.045,.355,1);
+            transition: all .3s cubic-bezier(.645,.045,.355,1);
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            height: 32px;
+            padding: 4px 15px;
+            font-size: 14px;
+            border-radius: 2px;
+            color: rgba(0,0,0,.65);
+            background: #fff;
+            border-color: #d9d9d9;
+            outline: none;
+        }
+
+        .btn-primary{
+            color: #fff;
+            background: #1890ff;
+            border-color: #1890ff;
+            text-shadow: 0 -1px 0 rgba(0,0,0,.12);
+            -webkit-box-shadow: 0 2px 0 rgba(0,0,0,.045);
+            box-shadow: 0 2px 0 rgba(0,0,0,.045);
+        }
+    </style>
+</head>
+<body>
+<div class="modal-wrap hide" id="toast">
+    <div class="modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="body-wrapper">
+                    <div>
+                        <span class="icon">
+                            <svg viewBox="64 64 896 896" focusable="false" class="" data-icon="check-circle" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M699 353h-46.9c-10.2 0-19.9 4.9-25.9 13.3L469 584.3l-71.2-98.8c-6-8.3-15.6-13.3-25.9-13.3H325c-6.5 0-10.3 7.4-6.5 12.7l124.6 172.8a31.8 31.8 0 0051.7 0l210.6-292c3.9-5.3.1-12.7-6.4-12.7z"></path><path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"></path></svg>
+                        </span>
+                        <span class="message">弹窗提示</span>
+                    </div>
+                    <div class="t-btns">
+                        <button type="button" class="btn btn-primary">
+                            <span onclick="toast(false)">知道了</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<button onclick="toast(true)">点我</button>
+</body>
+</html>
+<script>
+    function toast(visible) {
+        var toastDOM = document.getElementById("toast")
+        if(visible){
+            toastDOM.classList.remove("hide");
+        }else{
+            toastDOM.classList.add("hide");
+        }
+    }
+</script>

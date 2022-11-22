@@ -1,0 +1,33 @@
+
+涉及到React中的合成事件，详见React合成事件,debounce包装后的回调函数，是个异步事件，即e.target为null了
+
+
+
+
+
+解决方案: 使用e.persist()
+
+
+
+
+
+_onChange = (e)=>{
+        const { value } = e.target
+        this.setState({
+            value,
+            isShowPopup: !!value
+        })
+    }
+
+    onChange = (e)=>{
+        // 对原有事件进行保留
+        e.persist()
+        _.debounce((e)=>{
+            this._onChange(e)
+        },200)(e)
+    }
+
+
+
+
+<input onChange={this.onChange}/>

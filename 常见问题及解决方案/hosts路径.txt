@@ -1,0 +1,3 @@
+C:\Windows\System32\drivers\etc 
+ 
+mac：前往-前往文件夹 - /etc/hosts
