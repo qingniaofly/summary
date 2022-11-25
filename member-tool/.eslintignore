@@ -1,0 +1,8 @@
+# /node_modules/* and /bower_components/* in the project root are ignored by default
+vite.config.ts
+
+# Ignore built files except build/index.js !build/index.js
+dist/*
+public/*
+types/*
+src/vite-env.d.ts
